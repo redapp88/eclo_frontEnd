@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-button slot="end" color="danger" (click)="onLogout()">
+      <ion-icon name="power" slot="icon-only"></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="users">
+      <ion-label>utilisateurs</ion-label>
+      <ion-icon name="search"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="programs">
+      <ion-label>programmes</ion-label>
+      <ion-icon name="card"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+</ion-content>

@@ -1,0 +1,61 @@
+<ion-header class="ion-text-center">
+  <ion-toolbar>
+    <ion-title >
+     <ion-label>تحيين الدرس</ion-label>
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-text-center" padding>
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col  size="8">
+          <ion-item >
+            <ion-label align="right" position="floating">الموضوع</ion-label>
+            <ion-textarea align="right"  rows="2" formControlName="title"></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label align="right" position="floating"> نوع النشاط</ion-label>
+            <ion-select align="right"  formControlName="type">
+              <ion-select-option  *ngFor="let type of lessonsTypes" [value]="type">{{type}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row>
+        <ion-col >
+          <ion-item>
+            <ion-label align="right" position="floating">الساعة</ion-label>
+            <ion-select align="right"  formControlName="time">
+              <ion-select-option  *ngFor="let time of lessonsTimes" [value]="time">{{time}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col >
+          <ion-item >
+            <ion-label align="right" position="floating">التاريخ</ion-label>
+            <ion-datetime align="right" displayFormat="DD/MM/YYYY"
+                          [min]="minDate" [max]="maxDate" formControlName="date"></ion-datetime>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="onEditLesson()" [disabled]="!form.valid">
+            تسجيل <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

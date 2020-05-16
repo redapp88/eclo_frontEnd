@@ -1,5 +1,7 @@
 {
   "name": "eclo",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -1,0 +1,42 @@
+
+<ion-header class="ion-text-center">
+  <ion-toolbar>
+    <ion-button slot="start" (click)="onDownloadProgram()">
+      <ion-icon name="download-outline"></ion-icon>
+    </ion-button>
+    <ion-title >
+      <ion-label>برنامح {{month}} / {{year}} ---- {{categorie}}</ion-label>
+    </ion-title>
+    <ion-buttons slot="primary" >
+      <ion-button slot="end" (click)="onCancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+
+    <ion-col class="ion-text-center">
+
+      <table class="table table-striped" *ngIf="!isLoading" >
+        <tr *ngIf="!isLoading">
+          <th width="15%">type</th>
+          <th width="40%">titre</th>
+          <th width="15%">date</th>
+          <th width="15%" >heure</th>
+          <th width="15%">القائم بالنشاط</th>
+        </tr>
+        <tr *ngFor="let lesson of loadedLessons">
+          <td width="15%">{{lesson.type}}</td>
+          <td width="40%">{{lesson.title}}</td>
+          <td width="15%">{{lesson.date | date:'d/M/yyyy'}}</td>
+          <td width="15%">{{lesson.time}}</td>
+          <td width="15%">{{lesson.appUser.name}}</td>
+        </tr>
+      </table>
+      <ion-spinner *ngIf="isLoading" ></ion-spinner>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,76 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title align="center">
+       المجلس العلمي المحلي بتاونات
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title align="center"> تسجيل الدخول</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form #f="ngForm" (ngSubmit)="onLogin(f)">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-sm="8" offset-sm="2" size-md="6" offset-md="3" size-lg="4" offset-lg="4">
+              <ion-list>
+                <ion-item>
+                  <ion-label align="right" position="floating">اسم المستخدم</ion-label>
+                  <ion-input
+                          align="right"
+                          ngModel
+                          name="username"
+                          required
+                          #idCtrl="ngModel"
+                          type="text">
+                  </ion-input>
+                </ion-item>
+
+                <ion-item  *ngIf="!idCtrl.valid && idCtrl.touched" lines="none">
+                  <ion-text color="danger">entrer un Nom d'utilisateur valide</ion-text>
+                </ion-item>
+                <ion-item>
+                  <ion-label align="right" position="floating">
+                   كلمة السر
+                  </ion-label>
+                  <ion-input
+                          align="right"
+                          ngModel
+                          name="password"
+                          type="password"
+                          required
+                          minlength="4"
+                          #passwordCtrl="ngModel">
+                  </ion-input>
+                </ion-item>
+                <ion-item  *ngIf="!passwordCtrl.valid && passwordCtrl.touched" lines="none">
+                  <ion-text color="danger">Le mot de passe doit contenir au moin 4 caractaires </ion-text>
+                </ion-item>
+              </ion-list>
+
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+
+            <ion-col size-sm="8" offset-sm="2" size-md="6" offset-md="3" size-lg="4" offset-lg="4">
+              <ion-button
+                      type="submit"
+                      color="primary"
+                      expand="block">
+                دخول
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

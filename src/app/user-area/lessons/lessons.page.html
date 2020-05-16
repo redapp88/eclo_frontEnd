@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title align="center">
+      <ion-label>دروس برنامح شهر {{month}}/  {{year}}</ion-label>
+    </ion-title>
+    <ion-back-button slot="start" defaultHref="userArea"></ion-back-button>
+    <ion-button slot="end" (click)="onAddLesson()">
+      <ion-icon name="add" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+
+    <ion-col class="ion-text-center">
+
+      <table class="table table-striped" *ngIf="!isLoading" >
+        <tr *ngIf="!isLoading">
+
+
+          <th width="10%" ></th>
+          <th width="20%" >الساعة</th>
+          <th width="20%">التاريخ</th>
+          <th width="30%">الموضوع</th>
+          <th width="20%">نوع النشاط</th>
+
+        </tr>
+        <tr *ngFor="let lesson of loadedLessons">
+
+          <td width="10%">
+            <ion-button size="small" color="danger" (click)="onDeleteLesson(lesson.id)">
+              <ion-icon slot="icon-only"  name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </td>
+          <td width="20%" (click)="onEditLesson(lesson)">{{lesson.time}}</td>
+          <td width="20%" (click)="onEditLesson(lesson)">{{lesson.date | date:'yyyy/M/d'}}</td>
+          <td width="30%" (click)="onEditLesson(lesson)">{{lesson.title}}</td>
+          <td width="20%" (click)="onEditLesson(lesson)">{{lesson.type}}</td>
+        </tr>
+      </table>
+      <ion-spinner *ngIf="isLoading" ></ion-spinner>
+    </ion-col>
+  </ion-row>
+</ion-content>
