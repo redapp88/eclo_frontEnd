@@ -1,7 +1,8 @@
 {
   "name": "eclo",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

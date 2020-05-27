@@ -1,0 +1,55 @@
+<ion-header class="ion-text-center">
+  <ion-toolbar>
+    <ion-title >
+      <ion-label>تعديل برنامج {{program.year}}/{{program.month}}</ion-label>
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-text-center" padding>
+  <form [formGroup]="form">
+    <ion-grid align="right">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="font-weight-bold" align="right" position="floating">الشهر</ion-label>
+            <ion-label align="right">{{program.month}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label class="font-weight-bold" align="right" position="floating">السنة</ion-label>
+            <ion-label align="right">{{program.year}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="font-weight-bold" align="right" position="floating">التاريخ الهجري</ion-label>
+            <ion-input align="right" type="text"  formControlName="hijri"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="onEditProgram()" [disabled]="!form.valid">
+            تأكيد التعديل <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button  (click)="onDeleteProgram()" color="danger">
+            مسح البرنامج <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+        <ion-row>
+
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

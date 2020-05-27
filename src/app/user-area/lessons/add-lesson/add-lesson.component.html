@@ -34,6 +34,12 @@
       <ion-row>
         <ion-col >
           <ion-item>
+            <ion-label align="right" position="floating">المكان</ion-label>
+              <ion-input type="text" align="right" formControlName="area"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col >
+          <ion-item>
             <ion-label align="right" position="floating">الساعة</ion-label>
             <ion-select align="right"  formControlName="time">
               <ion-select-option  *ngFor="let time of lessonsTimes" [value]="time">{{time}}</ion-select-option>
@@ -47,6 +53,7 @@
                           [min]="minDate" [max]="maxDate" formControlName="date"></ion-datetime>
           </ion-item>
         </ion-col>
+
 
       </ion-row>
       <ion-row>

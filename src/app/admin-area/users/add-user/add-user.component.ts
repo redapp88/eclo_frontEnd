@@ -82,16 +82,11 @@ export class AddUserComponent  implements OnInit {
             loadingEl.present();
             this.usersService.addUser(username,password,name,sex,phone,categorie,area).subscribe(
                 ()=>{},
-                (error)=>{loadingEl.dismiss();this.showAlert(error.message)},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message)},
                 ()=>{this.modalCtrl.dismiss({},'success');loadingEl.dismiss()}
             )
         })
 
     }
 
-private showAlert(message:string){
-        this.alertCtrl.create({header:'Message',message:message,buttons:['Okay']}).then(
-            (alertEl=>{alertEl.present()})
-        )
-    }
 }

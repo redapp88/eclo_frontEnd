@@ -8,6 +8,7 @@ import { ProgramsPageRoutingModule } from './programs-routing.module';
 
 import { ProgramsPage } from './programs.page';
 import {AddProgramComponent} from './add-program/add-program.component';
+import {EditProgramComponent} from './edit-program/edit-program.component';
 
 @NgModule({
   imports: [
@@ -17,8 +18,8 @@ import {AddProgramComponent} from './add-program/add-program.component';
     ProgramsPageRoutingModule,
       ReactiveFormsModule
   ],
-    entryComponents:[AddProgramComponent],
-  declarations: [ProgramsPage,AddProgramComponent]
+    entryComponents:[AddProgramComponent,EditProgramComponent],
+  declarations: [ProgramsPage,AddProgramComponent,EditProgramComponent]
 })
 export class ProgramsPageModule {}
 

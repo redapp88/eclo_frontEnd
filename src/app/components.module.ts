@@ -4,13 +4,14 @@ import {EditPasswordComponent} from './shared/edit-password/edit-password.compon
 import {IonicModule} from '@ionic/angular';
 import {ReactiveFormsModule} from '@angular/forms';
 import {PersProgramViewComponent} from './user-area/pers-program-view/pers-program-view.component';
+import {UserDetailsComponent} from './shared/user-details/user-details.component';
 
 
 
 @NgModule({
-  declarations: [EditPasswordComponent,PersProgramViewComponent],
-    entryComponents:[EditPasswordComponent,PersProgramViewComponent],
-    exports:[EditPasswordComponent],
+  declarations: [EditPasswordComponent,PersProgramViewComponent,UserDetailsComponent],
+    entryComponents:[EditPasswordComponent,PersProgramViewComponent,UserDetailsComponent],
+    exports:[EditPasswordComponent,UserDetailsComponent],
   imports: [
       IonicModule,
       CommonModule,

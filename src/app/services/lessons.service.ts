@@ -36,11 +36,11 @@ export class LessonsService {
     }
 
 
-    public createLesson(type:string,title:string,date:string,time:string,programId:string,username:string){
+    public createLesson(type:string,title:string,date:string,time:string,programId:string,username:string,area:string){
         return new Observable(observer=>{
             this.http.post
             (`${environment.backEndUrl}/users/lessons/add`,
-                {type:type,title:title,date:date,time:time,programId:programId,username:username},this.authService.httpOptions()).subscribe(
+                {type:type,title:title,date:date,time:time,programId:programId,username:username,area:area},this.authService.httpOptions()).subscribe(
                 (resData:any)=>{
                     observer.complete();
                 },
@@ -56,11 +56,11 @@ export class LessonsService {
                 ,this.authService.httpOptions())
     }
 
-    public editLesson(id:number,type:string,title:string,date:string,time:string,programId:string,username:string){
+    public editLesson(id:number,type:string,title:string,date:string,time:string,programId:string,username:string,area:string){
         return new Observable(observer=>{
             this.http.put
             (`${environment.backEndUrl}/users/lessons/edit?id=${id}`,
-                {type:type,title:title,date:date,time:time,programId:programId,username:username},this.authService.httpOptions()).subscribe(
+                {type:type,title:title,date:date,time:time,programId:programId,username:username,area:area},this.authService.httpOptions()).subscribe(
                 (resData:any)=>{
                     observer.complete();
                 },

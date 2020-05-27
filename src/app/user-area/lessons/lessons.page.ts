@@ -9,6 +9,7 @@ import {AuthService} from '../../services/auth.service';
 import {Lesson} from '../../models/Lesson.model';
 import {AddLessonComponent} from './add-lesson/add-lesson.component';
 import {EditLessonComponent} from './edit-lesson/edit-lesson.component';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-lessons',
@@ -22,6 +23,7 @@ export class LessonsPage implements OnInit {
                 private loadingCtrl:LoadingController,
                 private router:Router,
                 private lessonsService:LessonsService,
+                private usersService:UsersService,
                 private authService:AuthService,
                 private alertCtrl:AlertController,
                 private modalCtrl:ModalController,
@@ -72,21 +74,13 @@ export class LessonsPage implements OnInit {
         this.isLoading=true;
         this.lessonsService.fetchLessonsByUser(this.month,this.year,this.authService.curentUser.username,'*').subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error.message);this.isLoading=false;},
+            (error)=>{this.usersService.showAlert(error.error.message);this.isLoading=false;},
             ()=>{
                 this.isLoading=false;
             }
         );
     }
-    showAlert(message){
-        this.alertCtrl.create({
-            message:message,
-            header:'erreur',
-            buttons:[{text:'Ok',role:'cancel'}]
-        }).then(
-            (alertEl)=>{alertEl.present()}
-        )
-    }
+
 
     onLogout(){
         this.alertCtrl.create
@@ -122,10 +116,9 @@ export class LessonsPage implements OnInit {
         })
     }
     private deleteLesson(id:number){
-        console.log(id);
         this.lessonsService.deleteLesson(id).subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error)},
+            (error)=>{this.usersService.showAlert(error.error.message)},
             ()=>{this.loadLessons();
             this.toastctrl.create(
                 {message:'operation reussite',color:'success',duration:2000}

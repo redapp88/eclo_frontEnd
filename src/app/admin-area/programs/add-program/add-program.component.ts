@@ -20,7 +20,8 @@ export class AddProgramComponent implements OnInit {
                 private alertCtrl:AlertController,
                 private lessonsService:LessonsService,
                 private loadingCtrl:LoadingController,
-                private programsService:ProgramsService) { }
+                private programsService:ProgramsService,
+                private usersService:UsersService) { }
 
     ngOnInit() {
         this.months=this.programsService.months;
@@ -30,7 +31,7 @@ export class AddProgramComponent implements OnInit {
                 updateOn:'change',
                 validators:[Validators.required]
             }),
-            year:new FormControl(this.today.getYear()+1900,{
+            year:new FormControl(this.today.getFullYear(),{
                 updateOn:'change',
                 validators:[Validators.required]
             }),
@@ -62,16 +63,11 @@ export class AddProgramComponent implements OnInit {
             loadingEl.present();
             this.programsService.addProgram(month,year,hijri).subscribe(
                 ()=>{},
-                (error)=>{loadingEl.dismiss();this.showAlert(error.message)},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message)},
                 ()=>{this.modalCtrl.dismiss({},'success');loadingEl.dismiss()}
             )
         })
 
     }
 
-    private showAlert(message:string){
-        this.alertCtrl.create({header:'Message',message:message,buttons:['Okay']}).then(
-            (alertEl=>{alertEl.present()})
-        )
-    }
 }

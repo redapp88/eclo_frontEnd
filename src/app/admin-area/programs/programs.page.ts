@@ -9,6 +9,8 @@ import {Program} from '../../models/Program.model';
 import {PersProgramViewComponent} from '../../user-area/pers-program-view/pers-program-view.component';
 import {AddUserComponent} from '../users/add-user/add-user.component';
 import {AddProgramComponent} from './add-program/add-program.component';
+import {GeneralProgramViewComponent} from './program-view/general-program-view/general-program-view.component';
+import {EditProgramComponent} from './edit-program/edit-program.component';
 
 @Component({
   selector: 'app-programs',
@@ -80,10 +82,23 @@ export class ProgramsPage implements OnInit {
 
     onChangeStatus($event,program:Program) {
             program.status=$event.detail.value;
-            this.programsService.editProgram(program).subscribe(
+            this.programsService.editProgram(program.month,program.year,program.hijri,program.status).subscribe(
                 ()=>{},
                 (error)=>{this.showAlert(error)},
                 ()=>{this.loadPrograms()}
             )
+    }
+
+    onEditProgram(program: Program) {
+        this.modalCtrl.create(
+            {component:EditProgramComponent,componentProps:{program:program}}
+        ).then(modalEL=>{
+            modalEL.present();
+            return modalEL.onDidDismiss()
+        }).then(resData=>{
+            if(resData.role==='success'){
+                this.loadPrograms();
+            }
+        })
     }
 }

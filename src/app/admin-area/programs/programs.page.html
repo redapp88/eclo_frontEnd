@@ -3,35 +3,51 @@
 <ion-button slot="end" (click)="onAddProgram()">
   <ion-icon name="add" slot="icon-only"></ion-icon>
 </ion-button>
-<ion-grid>
+<ion-grid align="right" class="font-weight-bold">
   <ion-row>
-    <ion-col size="10" offset="1">
-      <ion-spinner *ngIf="isLoading" ></ion-spinner>
+    <ion-col sizeLg="6" offsetLg="3" size="10" offset="1">
+      <ion-spinner *ngIf="isLoading" align="center" ></ion-spinner>
       <table class="table table-striped" *ngIf="!isLoading">
-       <tr *ngFor="let program of loadedPrograms">
+       <tr *ngFor="let program of loadedPrograms" >
          <td>
-           <ion-label *ngIf="program.status=='enabled'">
-             <ion-icon (click)="onGoToProgram(program.month,program.year)" size="large"  color="success" name="lock-open-outline"></ion-icon>
-           </ion-label>
-           <ion-label *ngIf="program.status=='disabled'">
-             <ion-icon (click)="onGoToProgram(program.month,program.year)" size="large"  color="danger" name="lock-closed-outline"></ion-icon>
+           <ion-label align="center" >
+             <ion-button fill="clear" (click)="onGoToProgram(program.month,program.year)">
+               <ion-icon  size="large"  name="create-outline"></ion-icon>
+             </ion-button>
            </ion-label>
          </td>
          <td>
-           <ion-label (click)="onGoToProgram(program.month,program.year)">
-             {{program.month}}/{{program.year}}
+           <ion-label  align="center" >
+             <ion-button fill="clear" (click)="onEditProgram(program)">
+               <ion-icon color="warning"  size="large" name="build-outline"></ion-icon>
+             </ion-button>
            </ion-label>
          </td>
-         <td><ion-label (click)="onGoToProgram(program.month,program.year)">
+         <td>
+           <ion-select [value]="program.status" (ionChange)="onChangeStatus($event,program)">
+             <ion-select-option value="enabled" >مفتوح</ion-select-option>
+             <ion-select-option value="disabled" >مغلق</ion-select-option>
+           </ion-select>
+         </td>
+         <td>
+           <ion-label class="bigText">
            {{program.hijri}}
          </ion-label>
          </td>
          <td>
-           <ion-select [value]="program.status" (ionChange)="onChangeStatus($event,program)">
-             <ion-select-option value="enabled" >active</ion-select-option>
-             <ion-select-option value="disabled" >bloqué</ion-select-option>
-           </ion-select>
+           <ion-label class="bigText">
+          {{program.year}} /  {{program.month}}
+           </ion-label>
          </td>
+         <td>
+           <ion-label *ngIf="program.status=='enabled'">
+             <ion-icon  size="large"  color="success" name="lock-open-outline"></ion-icon>
+           </ion-label>
+           <ion-label *ngIf="program.status=='disabled'">
+             <ion-icon size="large"  color="danger" name="lock-closed-outline"></ion-icon>
+           </ion-label>
+         </td>
+
        </tr>
       </table>
     </ion-col>

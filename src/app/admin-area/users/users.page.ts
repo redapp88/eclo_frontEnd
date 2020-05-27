@@ -76,9 +76,9 @@ export class UsersPage implements OnInit {
     }
     onDeleteUser(username:string) {
         this.alertCtrl.create(
-            {header:'confirmation',
-                message:'voulez vous vraiment supprimer cette utilisateur',
-                buttons:[{text:'Oui',handler:()=>{this.deleteUser(username)}},{text:'Annuler',role:'cancel'}]}
+            {header:'تأكيد',
+                message:'هل تريد ازالة هذا المستخدم؟ ',
+                buttons:[{text:'نعم',handler:()=>{this.deleteUser(username)}},{text:'لا',role:'cancel'}]}
         ).then(alertEl=>{
             alertEl.present()
         })
@@ -86,34 +86,25 @@ export class UsersPage implements OnInit {
     private deleteUser(username:string){
         this.usersService.deleteUser(username).subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error)},
+            (error)=>{this.usersService.showAlert(error.error.message)},
             ()=>{this.loadUsers();
                 this.toastCtrl.create(
                     {message:'operation reussite',color:'success',duration:2000}
                 ).then(toastEl=>{toastEl.present()})}
         )
     }
-    private loadUsers(){
+     loadUsers(){
         console.log(this.form.value['keyword'],this.form.value['categorie']);
         this.isLoading=true;
         this.usersService.fetchUsers('active',this.form.value['keyword'],this.form.value['categorie']).subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error.message);this.isLoading=false;},
+            (error)=>{this.usersService.showAlert(error.error.message);this.isLoading=false;},
             ()=>{
                 this.isLoading=false;
             }
         );
     }
 
-    showAlert(message){
-        this.alertCtrl.create({
-            message:message,
-            header:'erreur',
-            buttons:[{text:'Ok',role:'cancel'}]
-        }).then(
-            (alertEl)=>{alertEl.present()}
-        )
-    }
     areaById(id:string){
        let  area:string;
        for(let i=0;i<this.usersService.usersAreas.length;i++){

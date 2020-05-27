@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-    backEndUrl:"http://192.168.0.178:8080"
+    backEndUrl:"https://eclobackend.herokuapp.com"
 };
 
 /*

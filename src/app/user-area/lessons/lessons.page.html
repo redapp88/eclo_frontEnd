@@ -20,10 +20,11 @@
 
 
           <th width="10%" ></th>
-          <th width="20%" >الساعة</th>
-          <th width="20%">التاريخ</th>
+          <th width="15%" >المكان</th>
+          <th width="15%" >الساعة</th>
+          <th width="15%">التاريخ</th>
           <th width="30%">الموضوع</th>
-          <th width="20%">نوع النشاط</th>
+          <th width="15%">نوع النشاط</th>
 
         </tr>
         <tr *ngFor="let lesson of loadedLessons">
@@ -33,10 +34,11 @@
               <ion-icon slot="icon-only"  name="close-circle-outline"></ion-icon>
             </ion-button>
           </td>
-          <td width="20%" (click)="onEditLesson(lesson)">{{lesson.time}}</td>
-          <td width="20%" (click)="onEditLesson(lesson)">{{lesson.date | date:'yyyy/M/d'}}</td>
+          <td width="15%" (click)="onEditLesson(lesson)">{{lesson.area}}</td>
+          <td width="15%" (click)="onEditLesson(lesson)">{{lesson.time}}</td>
+          <td width="15%" (click)="onEditLesson(lesson)">{{lesson.date | date:'yyyy/M/d'}}</td>
           <td width="30%" (click)="onEditLesson(lesson)">{{lesson.title}}</td>
-          <td width="20%" (click)="onEditLesson(lesson)">{{lesson.type}}</td>
+          <td width="15%" (click)="onEditLesson(lesson)">{{lesson.type}}</td>
         </tr>
       </table>
       <ion-spinner *ngIf="isLoading" ></ion-spinner>

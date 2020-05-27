@@ -58,24 +58,24 @@ export class EditUserComponent implements OnInit {
 
     onEditUser() {
         this.alertCtrl.create
-        ({header:"confirmation",
-            message:"voulez vous enregistrer les modifications?",
+        ({header:"تأكيد",
+            message:"هل تريد تعديل المعلومات؟",
             buttons:[
-                {text:"oui",handler:()=>{
+                {text:"نعم",handler:()=>{
                         this.editUser(this.user.username,
                             this.form.value['name'],this.form.value['sex'],this.form.value['phone'],
                             this.form.value['categorie'],this.form.value['area'],this.user.status)
                     }},
-                {text:"non",role:"cancel"}]})
+                {text:"لا",role:"cancel"}]})
             .then((alertEl)=>{alertEl.present()})
     }
 
     editUser(username:string,name:string,sex:string,phone:string,categorie:string,area:string,status:string){
-        this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'enregistrement...'}).then((loadingEl)=>{
+        this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'تسجيل...'}).then((loadingEl)=>{
             loadingEl.present();
             this.usersService.editUser(username,name,sex,phone,categorie,area,status).subscribe(
                 ()=>{},
-                (error)=>{loadingEl.dismiss();this.showAlert(error.message)},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message)},
                 ()=>{this.modalCtrl.dismiss({},'success');loadingEl.dismiss()}
             )
         })
@@ -94,10 +94,5 @@ export class EditUserComponent implements OnInit {
         })
     }
 
-    private showAlert(message:string){
-        this.alertCtrl.create({header:'Message',message:message,buttons:['Okay']}).then(
-            (alertEl=>{alertEl.present()})
-        )
-    }
 
 }

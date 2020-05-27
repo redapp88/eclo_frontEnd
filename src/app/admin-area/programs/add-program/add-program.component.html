@@ -1,7 +1,7 @@
 <ion-header class="ion-text-center">
   <ion-toolbar>
     <ion-title >
-      <ion-label>nouveau Programme</ion-label>
+      <ion-label>برنامج جديد</ion-label>
     </ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="onCancel()">
@@ -16,16 +16,16 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-label position="floating">Mois:</ion-label>
-            <ion-select formControlName="month">
+            <ion-label class="font-weight-bold" align="right" position="floating">الشهر</ion-label>
+            <ion-select align="right" formControlName="month">
               <ion-select-option  *ngFor="let month of months" [value]="month">{{month}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
-            <ion-label position="floating">Année:</ion-label>
-            <ion-select formControlName="year">
+            <ion-label class="font-weight-bold" align="right" position="floating">السنة</ion-label>
+            <ion-select align="right" formControlName="year">
               <ion-select-option  *ngFor="let year of years" [value]="year">{{year}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -34,15 +34,15 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-label position="floating">Hijri:</ion-label>
-            <ion-input type="text"  formControlName="hijri"></ion-input>
+            <ion-label class="font-weight-bold" align="right" position="floating">التاريخ الهجري</ion-label>
+            <ion-input align="right" type="text"  formControlName="hijri"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
           <ion-button (click)="onAddProgram()" [disabled]="!form.valid">
-            enregistrer <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+            تسجيل <ion-icon name="checkmark" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>

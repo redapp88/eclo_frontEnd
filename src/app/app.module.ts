@@ -13,11 +13,12 @@ import { FileTransfer} from '@ionic-native/file-transfer/ngx';
 import {AndroidPermissions} from '@ionic-native/android-permissions/ngx';
 import { Downloader } from '@ionic-native/downloader/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import {ComponentsModule} from './components.module';
 @NgModule({
 
     declarations: [AppComponent],
     entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,ComponentsModule],
     exports:[ ReactiveFormsModule],
     providers: [
         StatusBar,
@@ -26,6 +27,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
         FileTransfer,
         File,
         FileOpener,
+        Downloader,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ],
     bootstrap: [AppComponent]

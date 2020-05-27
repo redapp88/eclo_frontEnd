@@ -8,6 +8,9 @@ import {UsersService} from '../../../services/users.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PersProgramViewComponent} from '../../../user-area/pers-program-view/pers-program-view.component';
 import {GeneralProgramViewComponent} from './general-program-view/general-program-view.component';
+import {AppUser} from '../../../models/appUser.model';
+import {UserDetailsComponent} from '../../../shared/user-details/user-details.component';
+
 
 @Component({
   selector: 'app-program-view',
@@ -25,7 +28,8 @@ export class ProgramViewPage implements OnInit {
                 private programsService:ProgramsService,
                 private usersService:UsersService,
                 private loadingCtrl:LoadingController,
-                private toastCtrl:ToastController
+                private toastCtrl:ToastController,
+                private popoverCtrl:PopoverController
     ) { }
     form:FormGroup;
     usersCategories: any[];
@@ -75,12 +79,12 @@ export class ProgramViewPage implements OnInit {
     }
 
 
-    private loadUsersWithLessonsCount(){
+     loadUsersWithLessonsCount(){
         this.isLoading=true;
         this.programsService.fetchUsersByCountLesson
         (this.form.value['keyword'],this.month+this.year,this.form.value['categorie'],"active").subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error.message);this.isLoading=false;},
+            (error)=>{this.usersService.showAlert(error.error.message);this.isLoading=false;},
             ()=>{
                 this.isLoading=false;
             }
@@ -103,29 +107,21 @@ export class ProgramViewPage implements OnInit {
             return modalEL.onDidDismiss()
         })
     }
-    showAlert(message){
-        this.alertCtrl.create({
-            message:message,
-            header:'erreur',
-            buttons:[{text:'Ok',role:'cancel'}]
-        }).then(
-            (alertEl)=>{alertEl.present()}
-        )
-    }
 
-    onDownloadProgram(){
+
+    onDownloadGeneralProgram(){
         let loading = this.loadingCtrl.create({
-            message:"chargement",
+            message:"المرجو الانتظار",
 
         });
         loading.then(loadingEl=>{
             loadingEl.present();
             this.programsService.downloadGeneralProgram(this.month,this.year,this.form.value['categorie']).subscribe(
                 ()=>{},
-                (error)=>{loadingEl.dismiss();this.showAlert(error.message);},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message);},
                 ()=>{
                     loadingEl.dismiss();
-                    this.toastCtrl.create({message:"Telechargement reussie ",cssClass:"ion-text-center"
+                    this.toastCtrl.create({message:"تحميل ناجح للملف",cssClass:"ion-text-center"
                         ,duration:2500}) .then(
                         (toastEL)=>{
                             toastEL.present()
@@ -135,5 +131,36 @@ export class ProgramViewPage implements OnInit {
             );
         })
 
+    }
+    onDownloadIndividualProgram(username:string){
+        let loading = this.loadingCtrl.create({
+            message:"المرجو الانتظار",
+
+        });
+        loading.then(loadingEl=>{
+            loadingEl.present();
+            this.programsService.downloadUserProgram(this.month,this.year,username).subscribe(
+                ()=>{},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message);},
+                ()=>{
+                    loadingEl.dismiss();
+                    this.toastCtrl.create({message:"تحميل ناجح للملف",cssClass:"ion-text-center"
+                        ,duration:2500}) .then(
+                        (toastEL)=>{
+                            toastEL.present()
+                        }
+                    )
+                }
+            );
+        })
+
+    }
+    public OnDetailsUserPopUp(user:AppUser){
+        this.popOverCtrl.create({
+            component:UserDetailsComponent,
+            componentProps:{user:user}
+        }).then(popEl=>{
+            popEl.present();
+        })
     }
 }

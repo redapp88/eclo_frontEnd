@@ -7,6 +7,7 @@ import {ProgramsService} from '../services/programs.service';
 import {Program} from '../models/Program.model';
 import {PersProgramViewComponent} from './pers-program-view/pers-program-view.component';
 import {EditPasswordComponent} from '../shared/edit-password/edit-password.component';
+import {UsersService} from '../services/users.service';
 
 @Component({
   selector: 'app-user-area',
@@ -19,7 +20,8 @@ export class UserAreaPage implements OnInit {
                 private popOverCtrl:PopoverController,
                 private authService:AuthService,
                 private router:Router,
-                private programsService:ProgramsService
+                private programsService:ProgramsService,
+                private usersService:UsersService
     ) { }
      currentUserName:string;
     loadedPrograms:Program[];
@@ -55,21 +57,13 @@ export class UserAreaPage implements OnInit {
         this.isLoading=true;
         this.programsService.fetchPrograms().subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error.message);this.isLoading=false;},
+            (error)=>{this.usersService.showAlert(error.error.message);this.isLoading=false;},
             ()=>{
                 this.isLoading=false;
             }
         );
     }
-    showAlert(message){
-        this.alertCtrl.create({
-            message:message,
-            header:'erreur',
-            buttons:[{text:'Ok',role:'cancel'}]
-        }).then(
-            (alertEl)=>{alertEl.present()}
-        )
-    }
+
 
     onLogout(){
         this.alertCtrl.create

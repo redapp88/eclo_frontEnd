@@ -6,6 +6,7 @@ export class Lesson {
                 public title:string,
                 public date:Date,
                 public time:string,
+                public area:string,
                 public program:Program,
                 public appUser:AppUser){}
 

@@ -9,6 +9,7 @@ import {Lesson} from '../../models/Lesson.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Program} from '../../models/Program.model';
 import {ProgramsService} from '../../services/programs.service';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-pers-program-view',
@@ -19,6 +20,7 @@ export class PersProgramViewComponent implements OnInit {
 
     constructor(private route:ActivatedRoute,
                 private lessonsService:LessonsService,
+                private usersService:UsersService,
                 private authService:AuthService,
                 private alertCtrl:AlertController,
                 private modalCtrl:ModalController,
@@ -55,21 +57,13 @@ export class PersProgramViewComponent implements OnInit {
         this.lessonsService.fetchLessonsByUser(this.month,this.year,
             this.username,'*').subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error.message);this.isLoading=false;},
+            (error)=>{this.usersService.showAlert(error.error.message);this.isLoading=false;},
             ()=>{
                 this.isLoading=false;
             }
         );
     }
-    showAlert(message){
-        this.alertCtrl.create({
-            message:message,
-            header:'erreur',
-            buttons:[{text:'Ok',role:'cancel'}]
-        }).then(
-            (alertEl)=>{alertEl.present()}
-        )
-    }
+
     onCancel() {
         this.modalCtrl.dismiss({},'cancel');
     }
@@ -82,7 +76,7 @@ export class PersProgramViewComponent implements OnInit {
             loadingEl.present();
             this.programsService.downloadUserProgram(this.month,this.year,this.username).subscribe(
                 ()=>{},
-                (error)=>{loadingEl.dismiss();this.showAlert(error.message);},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message);},
                 ()=>{
                     loadingEl.dismiss();
                     this.toastCtrl.create({message:"Telechargement reussie ",cssClass:"ion-text-center"

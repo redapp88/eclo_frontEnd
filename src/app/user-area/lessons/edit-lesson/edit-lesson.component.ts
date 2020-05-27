@@ -5,6 +5,7 @@ import {LessonsService} from '../../../services/lessons.service';
 import {AuthService} from '../../../services/auth.service';
 import {DatePipe} from '@angular/common';
 import {Lesson} from '../../../models/Lesson.model';
+import {UsersService} from '../../../services/users.service';
 
 @Component({
   selector: 'app-edit-lesson',
@@ -24,7 +25,7 @@ export class EditLessonComponent implements OnInit {
                 private alertCtrl:AlertController,
                 private lessonsService:LessonsService,
                 private loadingCtrl:LoadingController,
-                private authService:AuthService,
+                private usersService:UsersService,
                 public datepipe: DatePipe) { }
 
     ngOnInit() {
@@ -49,6 +50,10 @@ export class EditLessonComponent implements OnInit {
             time:new FormControl(this.lesson.time,{
                 updateOn:'change',
                 validators:[Validators.required]
+            }),
+            area:new FormControl(this.lesson.area,{
+                updateOn:'change',
+                validators:[Validators.required]
             })
 
         })
@@ -65,30 +70,25 @@ export class EditLessonComponent implements OnInit {
                 {text:"نعم",handler:()=>{
                         this.editLesson(this.lesson.id,this.form.value['type'],this.form.value['title'],
                             this.form.value['date'],this.form.value['time'],null,
-                            null)
+                            null,this.form.value['area'])
                     }},
                 {text:"لا",role:"cancel"}]})
             .then((alertEl)=>{alertEl.present()})
     }
 
-    editLesson(id:number,type:string,title:string,date:string,time:string,programId:string,username:string){
+    editLesson(id:number,type:string,title:string,date:string,time:string,programId:string,username:string,area:string){
         let formated_date =this.datepipe.transform(new Date(date), 'dd/MM/yyyy HH:mm:ss');
         console.log(type,formated_date);
         this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'المرجو الانتظار...'}).then((loadingEl)=>{
             loadingEl.present();
-            this.lessonsService.editLesson(id,type,title,formated_date,time,programId,username).subscribe(
+            this.lessonsService.editLesson(id,type,title,formated_date,time,programId,username,area).subscribe(
                 ()=>{},
-                (error)=>{loadingEl.dismiss();this.showAlert(error.message)},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message)},
                 ()=>{this.modalCtrl.dismiss({},'success');loadingEl.dismiss()}
             )
         })
 
     }
 
-    private showAlert(message:string){
-        this.alertCtrl.create({header:'Message',message:message,buttons:['Okay']}).then(
-            (alertEl=>{alertEl.present()})
-        )
-    }
 }
 

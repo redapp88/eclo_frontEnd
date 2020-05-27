@@ -1,52 +1,62 @@
 <form [formGroup]="form">
-    <ion-grid>
+    <ion-grid align="right" class="bigText">
         <ion-row>
-            <ion-col size="1">
+            <ion-col size="1" offsetLg="2">
                 <ion-back-button defaultHref="/adminArea/programs"></ion-back-button>
             </ion-col>
-            <ion-col size="5">
+            <ion-col size="5" sizeLg="3">
             <ion-item>
-                <ion-label class="font-weight-bolder">Programme : {{month}}/{{year}}</ion-label>
+                <ion-label  class="bigText">برنامج شهر : {{year}}/{{month}}</ion-label>
             </ion-item>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="4" sizeLg="2">
+                <ion-item-divider></ion-item-divider>
                 <ion-item>
-                    <ion-select formControlName="categorie" (ionChange)="loadUsersWithLessonsCount()">
+                    <ion-select class="bigText" align="right" formControlName="categorie" (ionChange)="loadUsersWithLessonsCount()">
                         <ion-select-option  *ngFor="let categorie of usersCategories" [value]="categorie.id">{{categorie.name}}</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-col>
             <ion-col size="1" >
-                <ion-icon size="large" name="eye-outline" (click)="onShowGeneralProgram()"></ion-icon>
+               <ion-button   fill="clear" (click)="onShowGeneralProgram()">
+                   <ion-icon  size="large" name="eye-outline" ></ion-icon></ion-button>
             </ion-col>
             <ion-col size="1">
-                <ion-icon size="large" name="download-outline" (click)="onDownloadProgram()"></ion-icon>
+                <ion-button fill="clear" (click)="onDownloadGeneralProgram()">
+                    <ion-icon  size="large" name="download-outline"></ion-icon>
+                </ion-button>
             </ion-col>
         </ion-row>
         <ion-row>
 
 <ion-col>
             <ion-item>
-                <ion-label position="floating">Mot clefs</ion-label>
-                <ion-input formControlName="keyword" type="text" (ionChange)="loadUsersWithLessonsCount()"></ion-input>
+                <ion-label align="right" position="floating">كلمات البحث</ion-label>
+                <ion-input align="right" formControlName="keyword" type="text" (ionChange)="loadUsersWithLessonsCount()"></ion-input>
             </ion-item>
 </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col>
+            <ion-col sizeLg="6" offsetLg="3">
                 <ion-spinner *ngIf="isLoading" ></ion-spinner>
                 <ion-list *ngIf="!isLoading" >
-                    <ion-item *ngFor="let u of loadedUsersWithCount" [ngClass]="{'text-danger': u.lessonsCount===0}" >
-                        <ion-label  >{{u.user.name}}</ion-label>
-                        <ion-label>{{u.lessonsCount}}</ion-label>
-                        <ion-label >
-                            <ion-icon size="big" *ngIf="u.lessonsCount>0" name="eye-outline" (click)="onShowProgram(u.user.username,u.user.name)">
+                    <ion-item align="right" *ngFor="let u of loadedUsersWithCount" [ngClass]="{'text-danger': u.lessonsCount===0}" >
+                    <ion-label >
+                        <ion-button color="dark" fill="clear" (click)="onDownloadIndividualProgram(u.user.username)">
+                            <ion-icon size="large" *ngIf="u.lessonsCount>0" name="download-outline"  ></ion-icon>
+                        </ion-button>
+                    </ion-label>
+                    <ion-label >
+                        <ion-button color="dark" fill="clear" (click)="onShowProgram(u.user.username,u.user.name)">
+                        <ion-icon size="large" *ngIf="u.lessonsCount>0" name="eye-outline" >
+                        </ion-icon>
+                        </ion-button>
+                    </ion-label>
+                        <ion-label align="center" class="bigText" >{{u.lessonsCount}}</ion-label>
+                        <ion-label class="bigText" align="right" (click)="OnDetailsUserPopUp(u.user)"  >{{u.user.name}}</ion-label>
 
-                            </ion-icon>
-                        </ion-label>
-                        <ion-label >
-                            <ion-icon size="big" *ngIf="u.lessonsCount>0" name="download-outline"></ion-icon>
-                        </ion-label>
+
+
 
                     </ion-item>
                 </ion-list>

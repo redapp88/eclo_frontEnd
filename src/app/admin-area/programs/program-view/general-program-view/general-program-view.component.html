@@ -5,7 +5,7 @@
       <ion-icon name="download-outline"></ion-icon>
     </ion-button>
     <ion-title >
-      <ion-label>برنامح {{month}} / {{year}} ---- {{categorie}}</ion-label>
+      <ion-label>برنامح صنف: {{categorieName}} -- لشهر {{month}} / {{year}}</ion-label>
     </ion-title>
     <ion-buttons slot="primary" >
       <ion-button slot="end" (click)="onCancel()">
@@ -22,18 +22,23 @@
 
       <table class="table table-striped" *ngIf="!isLoading" >
         <tr *ngIf="!isLoading">
-          <th width="15%">type</th>
-          <th width="40%">titre</th>
-          <th width="15%">date</th>
-          <th width="15%" >heure</th>
+          <th width="15%">المكان</th>
           <th width="15%">القائم بالنشاط</th>
+          <th width="15%" >الساعة</th>
+          <th width="15%">التاريخ</th>
+          <th width="40%">الموضوع</th>
+          <th width="15%"> نوع النشاط</th>
         </tr>
         <tr *ngFor="let lesson of loadedLessons">
-          <td width="15%">{{lesson.type}}</td>
-          <td width="40%">{{lesson.title}}</td>
-          <td width="15%">{{lesson.date | date:'d/M/yyyy'}}</td>
-          <td width="15%">{{lesson.time}}</td>
+          <td width="15%">{{lesson.area}}</td>
           <td width="15%">{{lesson.appUser.name}}</td>
+          <td width="15%">{{lesson.time}}</td>
+          <td width="15%">{{lesson.date | date:'d/M/yyyy'}}</td>
+          <td width="40%">{{lesson.title}}</td>
+          <td width="15%">{{lesson.type}}</td>
+
+
+
         </tr>
       </table>
       <ion-spinner *ngIf="isLoading" ></ion-spinner>

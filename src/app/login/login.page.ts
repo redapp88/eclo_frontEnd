@@ -3,6 +3,7 @@ import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
 import {AlertController, LoadingController, ToastController} from '@ionic/angular';
 import {environment} from '../../environments/environment';
+import {UsersService} from '../services/users.service';
 
 export interface AuthData{
     username:string,
@@ -21,7 +22,8 @@ export class LoginPage implements OnInit {
                 private router:Router,
                 private loadingCtrl:LoadingController,
                 private alertCtrl:AlertController,
-                public toastCtrl:ToastController) { }
+                public toastCtrl:ToastController,
+                private usersService:UsersService) { }
 
     ngOnInit() {
     }
@@ -56,7 +58,7 @@ export class LoginPage implements OnInit {
                     console.log(error)
                     loadingEL.dismiss();
 
-                    this.showAlert(this.authCodeToError(error))},
+                    this.usersService.showAlert(this.authCodeToError(error.error.message))},
                 ()=>{
 
                     loadingEL.dismiss();
@@ -67,23 +69,13 @@ export class LoginPage implements OnInit {
     }
 
 
-    private showAlert(message:string){
-        this.alertCtrl.create({header:'Message',message:message,buttons:['Okay']}).then(
-            (alertEl=>{alertEl.present()})
-        )
-    }
+
     private authCodeToError(message:string){
-        if(message==='EMAIL_EXISTS')
-            return 'An account with this Email exists Already'
-        if(message==='EMAIL_NOT_FOUND')
-            return 'Email not found'
-        if(message==='INVALID_PASSWORD')
-            return 'incorrecte password'
-        if(message==='USER_DISABLED')
-            return 'This account is disabled'
+        if(message==='Unauthorized')
+            return 'اسم المستخدم او الرمز السري غير صحيح'
 
         else{
-            return 'An authentication error has occured please check you Internet connexion'
+            return 'خلل في الاتصال المرجو المحاولة لاحقا'
         }
 
     }

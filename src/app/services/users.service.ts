@@ -3,29 +3,30 @@ import {environment} from '../../environments/environment';
 import {AuthService} from './auth.service';
 import {Observable, Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {AlertController} from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
     usersCategories : any[] = [
-        {id: 'wa',name: 'واعظ'},
-        {id: 'mo', name: 'متطوع'},
-        {id: '3o', name: 'عضو'}
+        {id: 'w',name: 'واعظ'},
+        {id: 't', name: 'متطوع'},
+        {id: 'o', name: 'عضو'}
         ];
     usersAreas : any[] = [
         {id: 'taounate',name: 'تاونات'},
         {id: 'karia', name: 'القرية'},
         {id: 'ghafsay', name: 'غفساي'},
         {id: 'tissa', name: 'تيسة'},
-        {id: 'tahrSouk', name: 'طهر الصوق'}
+        {id: 'tahrSouk', name: 'طهر السوق'}
     ];
     usersSubject:Subject<any>=new Subject<any>();
     users:any
     emitUsers(){
         this.usersSubject.next(this.users);
     }
-    constructor(private authService:AuthService,private http:HttpClient) {
+    constructor(private authService:AuthService,private http:HttpClient,private alertCtrl:AlertController) {
     }
 
     public fetchUsers(status:string,keyword:string,categorie:string){
@@ -95,5 +96,10 @@ export class UsersService {
     deleteUser(username:string){
         return this.http.delete(`${environment.backEndUrl}/admin/deleteUser?username=${username}`
             ,this.authService.httpOptions())
+    }
+    public showAlert(message:string){
+        this.alertCtrl.create({header:'تنبيه',message:message,buttons:['تم']}).then(
+            (alertEl=>{alertEl.present()})
+        )
     }
 }

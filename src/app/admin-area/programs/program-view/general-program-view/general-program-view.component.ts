@@ -6,6 +6,7 @@ import {LessonsService} from '../../../../services/lessons.service';
 import {ActivatedRoute} from '@angular/router';
 import {AlertController, ModalController} from '@ionic/angular';
 import {ProgramsService} from '../../../../services/programs.service';
+import {UsersService} from '../../../../services/users.service';
 
 @Component({
   selector: 'app-general-program-view',
@@ -19,7 +20,8 @@ export class GeneralProgramViewComponent implements OnInit {
                 private authService:AuthService,
                 private alertCtrl:AlertController,
                 private modalCtrl:ModalController,
-                private programsService:ProgramsService) { }
+                private programsService:ProgramsService,
+                private usersService:UsersService) { }
 
 
     @Input() month:string;
@@ -29,14 +31,18 @@ export class GeneralProgramViewComponent implements OnInit {
     loadedLessons:Lesson[];
     isLoading:boolean;
     lessonsSubscription:Subscription;
+    categorieName:string;
 
     ngOnInit() {
         this.lessonsSubscription=this.lessonsService.lessonsSubject.subscribe(
             (resultData)=>{
-                console.log(resultData)
                 this.loadedLessons=resultData
             }
-        )}
+        )
+        this.categorieName=this.getCategorieName(this.categorie);
+    }
+
+
 
 
 
@@ -44,27 +50,27 @@ export class GeneralProgramViewComponent implements OnInit {
         this.loadLessons();
 
     }
+    private getCategorieName(categorie:string){
+        let categorieName:string="";
+        for(var i:number=0;i<this.usersService.usersCategories.length;i++){
+            if(this.usersService.usersCategories[i].id==categorie)
+                categorieName=this.usersService.usersCategories[i].name
+        }
+        return categorieName
+    }
     private loadLessons(){
         this.loadedLessons=[];
         this.isLoading=true;
         this.lessonsService.fetchLessonsByUser(this.month,this.year,
             '*',this.categorie).subscribe(
             ()=>{},
-            (error)=>{this.showAlert(error.message);this.isLoading=false;},
+            (error)=>{this.usersService.showAlert(error.error.message);this.isLoading=false;},
             ()=>{
                 this.isLoading=false;
             }
         );
     }
-    showAlert(message){
-        this.alertCtrl.create({
-            message:message,
-            header:'erreur',
-            buttons:[{text:'Ok',role:'cancel'}]
-        }).then(
-            (alertEl)=>{alertEl.present()}
-        )
-    }
+
     onCancel() {
         this.modalCtrl.dismiss({},'cancel');
     }

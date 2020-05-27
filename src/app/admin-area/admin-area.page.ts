@@ -23,7 +23,6 @@ export class AdminAreaPage implements OnInit {
     userSubscription:Subscription;
 
     ngOnInit() {
-      console.log("yess")
         this.userSubscription=this.authService.userSubject.subscribe(
             (resData)=>{
                 if(resData===null){
@@ -37,15 +36,6 @@ export class AdminAreaPage implements OnInit {
     ionViewWillEnter(){
     }
 
-    showAlert(message){
-        this.alertCtrl.create({
-            message:message,
-            header:'erreur',
-            buttons:[{text:'Ok',role:'cancel'}]
-        }).then(
-            (alertEl)=>{alertEl.present()}
-        )
-    }
 
     onLogout(){
         this.alertCtrl.create

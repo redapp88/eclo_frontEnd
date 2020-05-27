@@ -61,12 +61,18 @@ export class ProgramsService {
         })
     }
 
-    editProgram(program:Program) {
+    editProgram(month:number,year:number,hijri:string,status:string) {
        return  this.http.put
-        (`${environment.backEndUrl}/admin/programs/edit?month=${program.month}&year=${program.year}`,
-            {month:program.month,year:program.year,status:program.status,hijri:program.hijri},
+        (`${environment.backEndUrl}/admin/programs/edit?month=${month}&year=${year}`,
+            {month:month,year:year,status:status,hijri:hijri},
             this.authService.httpOptions())
 }
+
+    deleteProgram(id:string){
+
+        return this.http.delete(`${environment.backEndUrl}/admin/programs/delete?id=${id}`
+            ,this.authService.httpOptions())
+    }
 
     fetchUsersByCountLesson(keyword:string,programId:string,categorie:string,status:string) {
 
@@ -88,10 +94,10 @@ export class ProgramsService {
     public downloadUserProgram(month:string,year:string,username:string){
         return new Observable(observer=>{
             this.http.get
-            (`${environment.backEndUrl}/exportProgram?month=${month}&year=${month}&username=${username}&categorie=*`
+            (`${environment.backEndUrl}/exportProgramPdf?month=${month}&year=${year}&username=${username}`
                 ,this.authService.httpOptions()).subscribe(
                 (resData:any)=>{
-                    this.dowloadsService.downloadFile3(resData.name).subscribe(
+                    this.dowloadsService.downloadFile(resData.name).subscribe(
                         ()=>{},
                     (error)=>{observer.error(error)},
                     ()=>{observer.complete()}
@@ -108,10 +114,10 @@ export class ProgramsService {
         console.log(month,year,categorie);
         return new Observable(observer=>{
             this.http.get
-            (`${environment.backEndUrl}/exportProgram?month=${month}&year=${year}&username=*&categorie=${categorie}`
+            (`${environment.backEndUrl}/exportProgramXls?month=${month}&year=${year}&username=*&categorie=${categorie}`
                 ,this.authService.httpOptions()).subscribe(
                 (resData:any)=>{
-                    this.dowloadsService.downloadFile3(resData.name).subscribe(
+                    this.dowloadsService.downloadFile(resData.name).subscribe(
                         ()=>{},
                         (error)=>{observer.error(error)},
                         ()=>{observer.complete()}
@@ -123,4 +129,6 @@ export class ProgramsService {
 
         })
     }
+
+
 }

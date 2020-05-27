@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LessonsService} from '../../../services/lessons.service';
 import {AuthService} from '../../../services/auth.service';
 import {DatePipe} from '@angular/common';
+import {UsersService} from '../../../services/users.service';
 
 @Component({
   selector: 'app-add-lesson',
@@ -22,6 +23,7 @@ export class AddLessonComponent implements OnInit {
     constructor(private modalCtrl:ModalController,
                 private alertCtrl:AlertController,
                 private lessonsService:LessonsService,
+                private usersService:UsersService,
                 private loadingCtrl:LoadingController,
                 private authService:AuthService,
                 public datepipe: DatePipe) { }
@@ -52,6 +54,10 @@ if(this.month.length<2)
             time:new FormControl(this.lessonsTimes[0],{
                 updateOn:'change',
                 validators:[Validators.required]
+            }),
+            area:new FormControl("",{
+                updateOn:'change',
+                validators:[Validators.required]
             })
 
         })
@@ -68,29 +74,25 @@ if(this.month.length<2)
                 {text:"نعم",handler:()=>{
                     this.createLesson(this.form.value['type'],this.form.value['title'],
                         this.form.value['date'],this.form.value['time'],this.month+this.year,
-                        this.authService.curentUser.username)
+                        this.authService.curentUser.username,this.form.value['area'])
                     }},
                 {text:"لا",role:"cancel"}]})
             .then((alertEl)=>{alertEl.present()})
     }
 
-    createLesson(type:string,title:string,date:string,time:string,programId:string,username:string){
+    createLesson(type:string,title:string,date:string,time:string,programId:string,username:string,area:string){
         let formated_date =this.datepipe.transform(new Date(date), 'dd/MM/yyyy HH:mm:ss');
         console.log(type,formated_date);
         this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'المرجو الانتظار...'}).then((loadingEl)=>{
             loadingEl.present();
-            this.lessonsService.createLesson(type,title,formated_date,time,programId,username).subscribe(
+            this.lessonsService.createLesson(type,title,formated_date,time,programId,username,area).subscribe(
                 ()=>{},
-                (error)=>{loadingEl.dismiss();this.showAlert(error.message)},
+                (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message)},
                 ()=>{this.modalCtrl.dismiss({},'success');loadingEl.dismiss()}
             )
         })
 
     }
 
-    private showAlert(message:string){
-        this.alertCtrl.create({header:'Message',message:message,buttons:['Okay']}).then(
-            (alertEl=>{alertEl.present()})
-        )
-    }
+
 }
