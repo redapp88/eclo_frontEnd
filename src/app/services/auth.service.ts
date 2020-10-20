@@ -25,7 +25,7 @@ export class AuthService implements OnDestroy {
                 (resData)=>{
                     let jwt=resData.headers.get("authorization");
                     this.setUserData(jwt);
-                    console.log(this.isUser()+"**"+this.curentUser)
+                   // console.log(this.isUser()+"**"+this.curentUser)
                         observer.complete();
                 },
                 (error)=>{observer.error(error)}
@@ -41,6 +41,11 @@ export class AuthService implements OnDestroy {
             let user:AppUser=
                 new AppUser(jwtHelper.decodeToken(jwt).sub,
                     jwtHelper.decodeToken(jwt).name,
+                    jwtHelper.decodeToken(jwt).categorie,
+                    jwtHelper.decodeToken(jwt).sex,
+                    jwtHelper.decodeToken(jwt).area,
+                    jwtHelper.decodeToken(jwt).phone,
+                    jwtHelper.decodeToken(jwt).status,
                     jwtHelper.decodeToken(jwt).roles,
                     new Date(new Date().getTime()+ +jwtHelper.decodeToken(jwt).experition),
                     jwt)
@@ -74,12 +79,17 @@ export class AuthService implements OnDestroy {
                     else{let data=JSON.parse(authData.value) as
                         { username:string,
                             name:string,
+                             categorie:string,
+                            sex:string,
+                             area:string,
+                             phone:string,
+                             status:string,
                             roles:{authority:string}[],
                             expirationDate:string,
                             jwt:string};
 
                         let user=
-                            new AppUser(data.username,data.name,data.roles,new Date(data.expirationDate),data.jwt)
+                            new AppUser(data.username,data.name,data.categorie,data.sex,data.area,data.phone,data.status,data.roles,new Date(data.expirationDate),data.jwt)
 
                         if(user.expirationDate<= new Date())
                         {
@@ -96,11 +106,6 @@ export class AuthService implements OnDestroy {
                             observer.next(true);
                             this.autoLogout(user.tokenDuration);
                         }
-
-
-
-
-
                     }
                     observer.complete()
                 })

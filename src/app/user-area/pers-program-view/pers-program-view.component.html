@@ -1,15 +1,16 @@
 
 <ion-header class="ion-text-center">
   <ion-toolbar>
-    <ion-button slot="start" (click)="onDownloadProgram()">
-      <ion-icon name="download-outline"></ion-icon>
+    <ion-button slot="end" (click)="onDownloadProgram()">
+      <ion-icon name="download-outline" size="large"></ion-icon>
     </ion-button>
     <ion-title align="center" >
-      <ion-label>برنامج {{name}}  لشهر   {{month}} / {{year}}</ion-label>
+      <ion-label class="font-weight-bold"> برنامج  {{name}}  لشهر   {{monthName(month)}}   {{year}} </ion-label>
+      <span>م</span>
     </ion-title>
-    <ion-buttons slot="primary" >
-      <ion-button slot="end" (click)="onCancel()">
-        <ion-icon name="close"></ion-icon>
+    <ion-buttons slot="start" >
+      <ion-button slot="primary" (click)="onCancel()">
+        <ion-icon name="arrow-back-outline" size="large"></ion-icon>
       </ion-button>
 
     </ion-buttons>

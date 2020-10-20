@@ -5,34 +5,41 @@
 </ion-button>
 
 <ion-grid align="right">
+  <ion-row >
+    <ion-col size="7"  sizeLg="5" >
+      <ion-item align="right">
+        <ion-label class="font-weight-bold"  align="right" position="floating">كلمات البحث</ion-label>
+        <ion-input align="right"  type="text"  formControlName="keyword" (ionChange)="loadUsers()"></ion-input>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="5" offsetLg="2" sizeLg="3"   align="right">
+        <ion-item  align="right"  >
+          <ion-label class="font-weight-bold"  align="right" position="floating"></ion-label>
+          <ion-select okText="إختر" cancelText="إلغاء" slot="end"   align="right" class="font-weight-bold" formControlName="categorie" (ionChange)="loadUsers()" >
+            <ion-select-option  *ngFor="let categorie of usersCategories" [value]="categorie.id">{{categorie.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+    </ion-col>
+
+  </ion-row>
   <ion-row>
 
-    <ion-col size="8">
+    <ion-col size="8" offset="2">
       <ion-spinner class="align-middle" *ngIf="isLoading" ></ion-spinner>
       <table class="table table-bordered" *ngIf="!isLoading">
         <tr *ngFor="let user of loadedUsers;let index = index">
           <td align="center"><ion-button fill="clear" (click)="onDeleteUser(user.username)"><ion-icon size="large" color="danger" name="trash" ></ion-icon></ion-button></td>
           <td align="center"><ion-button fill="clear" (click)="onEditUser(user)"><ion-icon name="create-outline" size="large" ></ion-icon></ion-button></td>
+          <td  class="font-weight-bold"align="right">{{user.phone}}</td>
           <td  class="font-weight-bold"align="right">{{areaById(user.area)}}</td>
           <td class="font-weight-bold" align="right">{{user.name}}</td>
           <td align="right">{{index + 1}}</td>
         </tr>
       </table>
     </ion-col>
-    <ion-col size="4" align="right">
-      <ion-list align="right">
-      <ion-item  align="right"  >
-        <ion-select slot="end"   align="right" class="font-weight-bold" formControlName="categorie" (ionChange)="loadUsers()" >
-          <ion-select-option  *ngFor="let categorie of usersCategories" [value]="categorie.id">{{categorie.name}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item align="right">
-        <ion-label class="font-weight-bold"  align="right" position="floating">كلمات البحث</ion-label>
-        <ion-input align="right"  type="text"  formControlName="keyword" (ionChange)="loadUsers()"></ion-input>
-      </ion-item>
-      </ion-list>
-    </ion-col>
   </ion-row>
+
 </ion-grid>
 </form>
 </ion-content>

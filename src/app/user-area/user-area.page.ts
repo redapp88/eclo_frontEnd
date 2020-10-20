@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
-import {AlertController, ModalController, PopoverController} from '@ionic/angular';
+import {AlertController, ModalController, PopoverController, ToastController} from '@ionic/angular';
 import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
 import {ProgramsService} from '../services/programs.service';
@@ -8,6 +8,7 @@ import {Program} from '../models/Program.model';
 import {PersProgramViewComponent} from './pers-program-view/pers-program-view.component';
 import {EditPasswordComponent} from '../shared/edit-password/edit-password.component';
 import {UsersService} from '../services/users.service';
+import {EditUserComponent} from '../admin-area/users/edit-user/edit-user.component';
 
 @Component({
   selector: 'app-user-area',
@@ -21,7 +22,8 @@ export class UserAreaPage implements OnInit {
                 private authService:AuthService,
                 private router:Router,
                 private programsService:ProgramsService,
-                private usersService:UsersService
+                private usersService:UsersService,
+                private toastCtrl:ToastController
     ) { }
      currentUserName:string;
     loadedPrograms:Program[];
@@ -37,6 +39,7 @@ export class UserAreaPage implements OnInit {
                 }
             }
         )
+            // console.log(this.authService.curentUser);
         this.currentUserName=this.authService.curentUser.name
         this.programsSubscription=this.programsService.programsSubject.subscribe(
             (resultData)=>{
@@ -97,8 +100,28 @@ export class UserAreaPage implements OnInit {
             return modalEL.onDidDismiss()
         }).then(resData=>{
             if(resData.role==='success'){
-               this.onLogout();
+                this.authService.logout();
             }
         })
+    }
+
+    onEditProfile(){
+        this.modalCtrl.create(
+            {component:EditUserComponent,componentProps:{user:this.authService.curentUser,editable:false}}
+        ).then(modalEL=>{
+            modalEL.present();
+            return modalEL.onDidDismiss()
+        }).then(resData=>{
+            if(resData.role==='success'){
+                this.authService.logout();
+                this.toastCtrl.create(
+                    {message:'عملية ناجحة',color:'success',cssClass:"ion-text-center",duration:1500}
+                ).then(toastEl=>{toastEl.present()})
+            }
+        })
+    }
+
+    monthName(month) {
+        return this.programsService.getMonthName(month);
     }
 }

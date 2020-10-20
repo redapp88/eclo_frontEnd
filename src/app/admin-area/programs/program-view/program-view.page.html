@@ -1,3 +1,4 @@
+<ion-content>
 <form [formGroup]="form">
     <ion-grid align="right" class="bigText">
         <ion-row>
@@ -6,13 +7,12 @@
             </ion-col>
             <ion-col size="5" sizeLg="3">
             <ion-item>
-                <ion-label  class="bigText">برنامج شهر : {{year}}/{{month}}</ion-label>
+                <ion-label  class="bigText">برنامج شهر : {{getmonthName(month)}} {{year}}</ion-label>
             </ion-item>
             </ion-col>
             <ion-col size="4" sizeLg="2">
-                <ion-item-divider></ion-item-divider>
                 <ion-item>
-                    <ion-select class="bigText" align="right" formControlName="categorie" (ionChange)="loadUsersWithLessonsCount()">
+                    <ion-select okText="إختر" cancelText="إلغاء" class="bigText" align="right" formControlName="categorie" (ionChange)="loadUsersWithLessonsCount()">
                         <ion-select-option  *ngFor="let categorie of usersCategories" [value]="categorie.id">{{categorie.name}}</ion-select-option>
                     </ion-select>
                 </ion-item>
@@ -31,7 +31,7 @@
 
 <ion-col>
             <ion-item>
-                <ion-label align="right" position="floating">كلمات البحث</ion-label>
+                <ion-label class="font-weight-bolder" align="right" position="floating">كلمات البحث</ion-label>
                 <ion-input align="right" formControlName="keyword" type="text" (ionChange)="loadUsersWithLessonsCount()"></ion-input>
             </ion-item>
 </ion-col>
@@ -39,8 +39,8 @@
         <ion-row>
             <ion-col sizeLg="6" offsetLg="3">
                 <ion-spinner *ngIf="isLoading" ></ion-spinner>
-                <ion-list *ngIf="!isLoading" >
-                    <ion-item align="right" *ngFor="let u of loadedUsersWithCount" [ngClass]="{'text-danger': u.lessonsCount===0}" >
+                <ion-list *ngIf="!isLoading"  >
+                    <ion-item align="right" *ngFor="let u of loadedUsersWithCount" [ngClass]="{'text-danger': u.lessonsCount===0,'text-warning': u.lessonsCount<6,'text-success': u.lessonsCount>=6 }" >
                     <ion-label >
                         <ion-button color="dark" fill="clear" (click)="onDownloadIndividualProgram(u.user.username)">
                             <ion-icon size="large" *ngIf="u.lessonsCount>0" name="download-outline"  ></ion-icon>
@@ -64,3 +64,4 @@
         </ion-row>
     </ion-grid>
 </form>
+</ion-content>

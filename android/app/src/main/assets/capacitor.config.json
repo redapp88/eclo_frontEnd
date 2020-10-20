@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "eclo",
+  "appId": "com.redapp.eclo",
+  "appName": "E-clo",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

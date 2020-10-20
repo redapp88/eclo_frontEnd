@@ -65,15 +65,15 @@ export class AddUserComponent  implements OnInit {
 
     onAddUser() {
         this.alertCtrl.create
-        ({header:"confirmation",
-            message:"voulez vous enregistrer cet utilisateur?",
+        ({header:"تأكيد",
+            message:"هل تأكد التسجيل؟",
             buttons:[
-                {text:"oui",handler:()=>{
+                {text:"نعم",handler:()=>{
                         this.addUser(this.form.value['username'],this.form.value['password'],
                             this.form.value['name'],this.form.value['sex'],this.form.value['phone'],
                             this.form.value['categorie'],this.form.value['area'])
                     }},
-                {text:"non",role:"cancel"}]})
+                {text:"لا",role:"cancel"}]})
             .then((alertEl)=>{alertEl.present()})
     }
 

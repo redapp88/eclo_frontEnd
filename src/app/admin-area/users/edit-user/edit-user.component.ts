@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AlertController, LoadingController, ModalController} from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, ToastController} from '@ionic/angular';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LessonsService} from '../../../services/lessons.service';
 import {AuthService} from '../../../services/auth.service';
@@ -14,6 +14,7 @@ import {EditPasswordComponent} from '../../../shared/edit-password/edit-password
 export class EditUserComponent implements OnInit {
 
     @Input() user:any;
+    @Input()editable:boolean;
     form:FormGroup;
     usersCategories: any[];
     usersAreas: any[]
@@ -22,30 +23,31 @@ export class EditUserComponent implements OnInit {
                 private lessonsService:LessonsService,
                 private loadingCtrl:LoadingController,
                 private authService:AuthService,
-                private usersService:UsersService) { }
+                private usersService:UsersService,
+                private toastCtrl:ToastController) { }
 
     ngOnInit() {
         this.usersCategories=this.usersService.usersCategories;
         this.usersAreas=this.usersService.usersAreas;
 
         this.form=new FormGroup({
-            name:new FormControl(this.user.name,{
+            name:new FormControl({value:this.user.name,disabled:!this.editable},{
+                updateOn:'change',
+                validators:[Validators.required],
+            }),
+            sex:new FormControl({value:this.user.sex,disabled:!this.editable},{
                 updateOn:'change',
                 validators:[Validators.required]
             }),
-            sex:new FormControl(this.user.sex,{
+            phone:new FormControl({value:this.user.phone,disabled:false},{
                 updateOn:'change',
                 validators:[Validators.required]
             }),
-            phone:new FormControl(this.user.phone,{
+            categorie:new FormControl({value:this.user.categorie,disabled:!this.editable},{
                 updateOn:'change',
                 validators:[Validators.required]
             }),
-            categorie:new FormControl(this.user.categorie,{
-                updateOn:'change',
-                validators:[Validators.required]
-            }),
-            area:new FormControl(this.user.area,{
+            area:new FormControl({value:this.user.area,disabled:!this.editable},{
                 updateOn:'change',
                 validators:[Validators.required]
             })
@@ -63,8 +65,8 @@ export class EditUserComponent implements OnInit {
             buttons:[
                 {text:"نعم",handler:()=>{
                         this.editUser(this.user.username,
-                            this.form.value['name'],this.form.value['sex'],this.form.value['phone'],
-                            this.form.value['categorie'],this.form.value['area'],this.user.status)
+                            this.form.get('name').value,this.form.get('sex').value,this.form.get('phone').value,
+                            this.form.get('categorie').value,this.form.get('area').value,this.user.status)
                     }},
                 {text:"لا",role:"cancel"}]})
             .then((alertEl)=>{alertEl.present()})
@@ -89,7 +91,9 @@ export class EditUserComponent implements OnInit {
             return modalEL.onDidDismiss()
         }).then(resData=>{
             if(resData.role==='success'){
-             //
+                this.toastCtrl.create(
+                    {message:'عملية ناجحة',color:'success',cssClass:"ion-text-center",duration:2000}
+                ).then(toastEl=>{toastEl.present()})
             }
         })
     }

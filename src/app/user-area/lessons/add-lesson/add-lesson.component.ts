@@ -36,7 +36,6 @@ if(this.month.length<2)
     checkMonth='0'+this.month;
         this.minDate=this.year+"-"+checkMonth;
         this.maxDate=this.year+"-"+checkMonth;
-        console.log(this.minDate);
         this.defaultDate=this.maxDate+"-01";
         this.form=new FormGroup({
             type:new FormControl(this.lessonsTypes[0],{
@@ -47,7 +46,7 @@ if(this.month.length<2)
                 updateOn:'change',
                 validators:[Validators.required,Validators.maxLength(180),Validators.minLength(5)]
             }),
-            date:new FormControl(null,{
+            date:new FormControl(this.defaultDate,{
                 updateOn:'change',
                 validators:[Validators.required]
             }),

@@ -33,6 +33,10 @@ export class EditProgramComponent implements OnInit {
                 updateOn:'change',
                 validators:[Validators.required]
             }),
+            confirme:new FormControl("",{
+                updateOn:'change',
+                validators:[Validators.required]
+            })
         })
     }
     onCancel() {
@@ -41,18 +45,18 @@ export class EditProgramComponent implements OnInit {
 
     onEditProgram() {
         this.alertCtrl.create
-        ({header:"confirmation",
-            message:"voulez vous editer ce programme?",
+        ({header:"تأكيد",
+            message:"هل تريد تأكيد التغيير؟",
             buttons:[
-                {text:"oui",handler:()=>{
+                {text:"نعم",handler:()=>{
                         this.editProgram(this.program.month,this.program.year,this.form.value['hijri'],this.program.status)
                     }},
-                {text:"non",role:"cancel"}]})
+                {text:"لا",role:"cancel"}]})
             .then((alertEl)=>{alertEl.present()})
     }
 
     editProgram(month:number,year:number,hijri:string,status:string){
-        this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'enregistrement...'}).then((loadingEl)=>{
+        this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'المرجو الانتظار'}).then((loadingEl)=>{
             loadingEl.present();
             this.programsService.editProgram(month,year,hijri,status).subscribe(
                 ()=>{},
@@ -65,24 +69,30 @@ export class EditProgramComponent implements OnInit {
 
     onDeleteProgram() {
         this.alertCtrl.create(
-            {header:'confirmation',
-                message:'voulez vous vraiment supprimer cet program Attention ! cela va supprimer tout les cours',
-                buttons:[{text:'Oui',handler:()=>{this.deleteProgram(this.program.programId)}},{text:'Annuler',role:'cancel'}]}
+            {header:'تأكيد',
+                message:'هل تريد فعلا مسح البرنامج؟ هذا سوف يسبب مسح جميع الدروس النابعة لهذا البرنامج',
+                buttons:[{text:'نعم',handler:()=>{this.deleteProgram(this.program.programId)}},{text:'لا',role:'cancel'}]}
         ).then(alertEl=>{
             alertEl.present()
         })
     }
     private deleteProgram(id:string){
-        this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'suppression...'}).then((loadingEl)=>{
+        this.loadingCtrl.create({keyboardClose:true,spinner:'lines',message:'المرجو الانتطار'}).then((loadingEl)=>{
         this.programsService.deleteProgram(id).subscribe(
             ()=>{},
             (error)=>{this.usersService.showAlert(error.error.message)},
             ()=>{loadingEl.dismiss();this.modalCtrl.dismiss({},'success');
                 this.toastctrl.create(
-                    {message:'operation reussite',color:'success',duration:2000}
+                    {message:'عملبة ناجحة',color:'success',duration:2000}
                 ).then(toastEl=>{toastEl.present()})}
         )
     })
     }
 
+    verifyDelete() {
+      return this.form.value['confirme']  == "مسح"
+    }
+    getMonthName(month){
+        return this.programsService.getMonthName(month)
+    }
 }

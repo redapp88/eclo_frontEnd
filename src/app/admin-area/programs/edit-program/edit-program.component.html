@@ -1,29 +1,31 @@
+<form [formGroup]="form">
 <ion-header class="ion-text-center">
   <ion-toolbar>
-    <ion-title >
-      <ion-label>تعديل برنامج {{program.year}}/{{program.month}}</ion-label>
+    <ion-title  class="font-weight-bold"  >
+      <ion-label>تعديل برنامج شهر  {{getMonthName(program.month)}}</ion-label>
+      <ion-label>{{program.year}}</ion-label>
     </ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="onCancel()">
-        <ion-icon name="close"></ion-icon>
+        <ion-icon size="large" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-text-center" padding>
-  <form [formGroup]="form">
+<ion-content  class="heightContent" padding>
+
     <ion-grid align="right">
       <ion-row>
         <ion-col>
           <ion-item>
             <ion-label class="font-weight-bold" align="right" position="floating">الشهر</ion-label>
-            <ion-label align="right">{{program.month}}</ion-label>
+            <ion-label  class="font-weight-bold" align="right">{{program.month}}</ion-label>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
             <ion-label class="font-weight-bold" align="right" position="floating">السنة</ion-label>
-            <ion-label align="right">{{program.year}}</ion-label>
+            <ion-label  class="font-weight-bold" align="right">{{program.year}}</ion-label>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -31,25 +33,41 @@
         <ion-col>
           <ion-item>
             <ion-label class="font-weight-bold" align="right" position="floating">التاريخ الهجري</ion-label>
-            <ion-input align="right" type="text"  formControlName="hijri"></ion-input>
+            <ion-input  class="font-weight-bold" align="right" type="text"  formControlName="hijri"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <ion-button (click)="onEditProgram()" [disabled]="!form.valid">
+        <ion-col  size="4" offset="4">
+          <ion-button  expand="block"(click)="onEditProgram()" [disabled]="!form.controls['hijri'].valid">
             تأكيد التعديل <ion-icon name="checkmark" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+</ion-content>
+  <ion-footer>
+
+    <ion-grid>
+      <ion-row>
         <ion-col>
-          <ion-button  (click)="onDeleteProgram()" color="danger">
+          <ion-button [disabled]="!verifyDelete()"   (click)="onDeleteProgram()" color="danger">
             مسح البرنامج <ion-icon name="trash" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-col>
+        <ion-col>
+          <ion-input class="bordred" align="right" type="text"  formControlName="confirme"></ion-input>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label>
+            من أجل مسح البرنامح المرجو كتابة كلمة: مسح           </ion-label>
+        </ion-col>
       </ion-row>
-        <ion-row>
 
-      </ion-row>
+
     </ion-grid>
-  </form>
-</ion-content>
+  </ion-footer>
+</form>

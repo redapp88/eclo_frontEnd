@@ -32,7 +32,6 @@ export class PersProgramViewComponent implements OnInit {
     @Input() month:string;
     @Input() year:string;
     @Input() username:string;
-    @Input() name:string;
     loadedLessons:Lesson[];
     isLoading:boolean;
     lessonsSubscription:Subscription;
@@ -43,7 +42,9 @@ export class PersProgramViewComponent implements OnInit {
                         console.log(resultData)
                         this.loadedLessons=resultData
                     }
-                )}
+                )
+
+    }
 
 
 
@@ -69,7 +70,7 @@ export class PersProgramViewComponent implements OnInit {
     }
     onDownloadProgram(){
         let loading = this.loadingCtrl.create({
-    message:"chargement",
+    message:"المرجو الانتظار",
 
         });
         loading.then(loadingEl=>{
@@ -79,7 +80,7 @@ export class PersProgramViewComponent implements OnInit {
                 (error)=>{loadingEl.dismiss();this.usersService.showAlert(error.error.message);},
                 ()=>{
                     loadingEl.dismiss();
-                    this.toastCtrl.create({message:"Telechargement reussie ",cssClass:"ion-text-center"
+                    this.toastCtrl.create({message:"تحميل ناجح ",color:'success',cssClass:"ion-text-center"
                         ,duration:2500}) .then(
                         (toastEL)=>{
                             toastEL.present()
@@ -91,6 +92,8 @@ export class PersProgramViewComponent implements OnInit {
 
     }
 
-
+    monthName(month){
+        return this.programsService.getMonthName(month);
+    }
 
     }

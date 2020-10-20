@@ -10,6 +10,7 @@ import {Lesson} from '../../models/Lesson.model';
 import {AddLessonComponent} from './add-lesson/add-lesson.component';
 import {EditLessonComponent} from './edit-lesson/edit-lesson.component';
 import {UsersService} from '../../services/users.service';
+import {ProgramsService} from '../../services/programs.service';
 
 @Component({
   selector: 'app-lessons',
@@ -27,16 +28,18 @@ export class LessonsPage implements OnInit {
                 private authService:AuthService,
                 private alertCtrl:AlertController,
                 private modalCtrl:ModalController,
-                private toastctrl:ToastController) { }
+                private toastctrl:ToastController,
+                private programsService:ProgramsService) { }
     loadedLessons:Lesson[];
     lessonsSubscription:Subscription;
     userSubscription:Subscription;
     isLoading=false;
     month:string;
     year:string;
+    name:string;
     ngOnInit() {
+        this.name=this.authService.curentUser.name;
         this.route.paramMap.subscribe(
-
             paramMap=>{
                 if(!paramMap.has("month") || !paramMap.has("year")){
                     this.navCtrl.navigateBack('userArea');
@@ -54,7 +57,6 @@ export class LessonsPage implements OnInit {
                 )
                 this.lessonsSubscription=this.lessonsService.lessonsSubject.subscribe(
                     (resultData)=>{
-                        console.log(resultData)
                         this.loadedLessons=resultData
                     }
                 )
@@ -137,5 +139,8 @@ export class LessonsPage implements OnInit {
                 this.loadLessons();
             }
         })
+    }
+    monthName(month){
+        return this.programsService.getMonthName(month);
     }
 }

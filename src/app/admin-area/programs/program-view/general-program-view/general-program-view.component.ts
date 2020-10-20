@@ -74,9 +74,8 @@ export class GeneralProgramViewComponent implements OnInit {
     onCancel() {
         this.modalCtrl.dismiss({},'cancel');
     }
-    onDownloadProgram(){
-        this.programsService.downloadUserProgram(this.month,this.year,'*')
-
+    monthName(month){
+        return this.programsService.getMonthName(month);
     }
 
 }

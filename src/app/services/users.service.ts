@@ -11,8 +11,8 @@ import {AlertController} from '@ionic/angular';
 export class UsersService {
     usersCategories : any[] = [
         {id: 'w',name: 'واعظ'},
-        {id: 't', name: 'متطوع'},
-        {id: 'o', name: 'عضو'}
+        {id: 't', name: 'واعظ متطوع'},
+        {id: 'o', name: 'عضوالمجلس'}
         ];
     usersAreas : any[] = [
         {id: 'taounate',name: 'تاونات'},
@@ -61,9 +61,10 @@ export class UsersService {
     }
 
     editUser(username: string, name: string, sex: string, phone: string, categorie: string, area: string,status:string) {
+        console.log(name,sex,phone,categorie,area,status);
         return new Observable(observer=>{
             this.http.put
-            (`${environment.backEndUrl}/admin/editUser?username=${username}`,
+            (`${environment.backEndUrl}/user/editUser?username=${username}`,
                 {name:name,sex:sex,phone:phone,categorie:categorie,area:area,status:status},
                 this.authService.httpOptions()).subscribe(
                 (resData:any)=>{
@@ -98,8 +99,17 @@ export class UsersService {
             ,this.authService.httpOptions())
     }
     public showAlert(message:string){
+        if(message==="403")
+
+            this.authService.logout();
+        else{
+        if ( message==null|| message=="" || message.length==0 )
+            message="خلل تقني المرجو المحاولة لاحقا";
+
+
         this.alertCtrl.create({header:'تنبيه',message:message,buttons:['تم']}).then(
             (alertEl=>{alertEl.present()})
         )
+    }
     }
 }

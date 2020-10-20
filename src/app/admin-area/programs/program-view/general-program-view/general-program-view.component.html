@@ -1,11 +1,10 @@
 
 <ion-header class="ion-text-center">
   <ion-toolbar>
-    <ion-button slot="start" (click)="onDownloadProgram()">
-      <ion-icon name="download-outline"></ion-icon>
-    </ion-button>
+
     <ion-title >
-      <ion-label>برنامح صنف: {{categorieName}} -- لشهر {{month}} / {{year}}</ion-label>
+      <ion-label class="font-weight-bold">برنامح صنف:- {{categorieName}} - لشهر    {{monthName(month)}}   {{year}} </ion-label>
+      <span>م</span>
     </ion-title>
     <ion-buttons slot="primary" >
       <ion-button slot="end" (click)="onCancel()">
@@ -33,7 +32,7 @@
           <td width="15%">{{lesson.area}}</td>
           <td width="15%">{{lesson.appUser.name}}</td>
           <td width="15%">{{lesson.time}}</td>
-          <td width="15%">{{lesson.date | date:'d/M/yyyy'}}</td>
+          <td width="15%">{{lesson.date | date:'yyyy/M/d'}}</td>
           <td width="40%">{{lesson.title}}</td>
           <td width="15%">{{lesson.type}}</td>
 

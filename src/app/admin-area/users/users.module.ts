@@ -10,7 +10,6 @@ import { UsersPage } from './users.page';
 import {AddUserComponent} from './add-user/add-user.component';
 import {EditLessonComponent} from '../../user-area/lessons/edit-lesson/edit-lesson.component';
 import {AddLessonComponent} from '../../user-area/lessons/add-lesson/add-lesson.component';
-import {EditUserComponent} from './edit-user/edit-user.component';
 import {ComponentsModule} from '../../components.module';
 
 @NgModule({
@@ -22,7 +21,7 @@ import {ComponentsModule} from '../../components.module';
       ReactiveFormsModule,
       ComponentsModule
   ],
-    entryComponents:[AddUserComponent,EditUserComponent],
-  declarations: [UsersPage,AddUserComponent,EditUserComponent]
+    entryComponents:[AddUserComponent],
+  declarations: [UsersPage,AddUserComponent]
 })
 export class UsersPageModule {}

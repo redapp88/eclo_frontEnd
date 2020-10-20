@@ -1,0 +1,9 @@
+.bordred{
+  border: solid #3dc2ff medium;
+}
+.heightContent{
+  min-height: 60vh;
+  height: 60vh;
+  box-sizing: border-box;
+  -webkit-margin-collapse: discard;
+}

@@ -1,26 +1,31 @@
-<ion-header>
+<ion-header class="font-weight-bolder">
+
   <ion-toolbar color="primary">
-    <ion-button slot="start" color="secondary" (click)="onEditPassword()">
+    <ion-button slot="start" color="secondary" (click)="onEditProfile()">
       <ion-icon name="person-outline" slot="icon-only"></ion-icon></ion-button>
-    <ion-title class="ion-text-center">فضاء المؤطر(ة) : {{currentUserName}}</ion-title>
+    <ion-title class="ion-text-center">مرحبا بك : {{currentUserName}}</ion-title>
     <ion-button slot="end" color="danger" (click)="onLogout()">
       <ion-icon name="power" slot="icon-only"></ion-icon></ion-button>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
   <ion-grid>
     <ion-row>
-      <ion-col class="ion-text-center">
+      <ion-col class="ion-text-center" [sizeLg]="6" [offsetLg]="3" >
         <ion-spinner *ngIf="isLoading" ></ion-spinner>
         <ion-list *ngIf="!isLoading">
           <ion-item *ngFor="let program of loadedPrograms">
-            <ion-label (click)="onShowProgram(program.month,program.year)" class="font-weight-bold">{{program.month}}/{{program.year}}</ion-label>
-            <ion-label> {{program.hijri}} </ion-label>
-            <ion-label align="right">
-              <ion-button *ngIf="program.status=='enabled'" (click)="onGoToProgram(program.month,program.year)"><ion-icon slot="icon-only" name="add-circle-outline"></ion-icon></ion-button>
-            <ion-button color="warning" (click)="onShowProgram(program.month,program.year)"><ion-icon slot="icon-only" name="eye-outline"></ion-icon></ion-button>
+            <ion-label align="center">
+              <ion-button *ngIf="program.status=='enabled'" (click)="onGoToProgram(program.month,program.year)"><ion-icon slot="icon-only" size="large" name="add-circle-outline"></ion-icon></ion-button>
+              <ion-button color="warning" (click)="onShowProgram(program.month,program.year)"><ion-icon slot="icon-only" size="large" name="eye-outline"></ion-icon></ion-button>
             </ion-label>
+            <ion-label align="right" class="font-weight-bold"> {{program.hijri}} </ion-label>
+            <ion-label align="right" (click)="onShowProgram(program.month,program.year)" class="font-weight-bold">  {{monthName(program.month)}} {{program.year}}<span>م</span></ion-label>
+
+
           </ion-item>
         </ion-list>
       </ion-col>

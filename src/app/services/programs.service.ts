@@ -11,6 +11,7 @@ import {DownloadsService} from './downloads.service';
 })
 export class ProgramsService {
     months : any[] = [1,2,3,4,5,6,7,8,9,10,11,12];
+    monthsNames:any[]= ["يناير","فبراير","مارس","ابريل","ماي","يونيو","يوليوز","غشت","شتنبر","اكتوبر","نونبر","دجنبر"];
     years : any[] = [2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030];
     programsSubject:Subject<any>=new Subject<any>();
     programs:any
@@ -130,5 +131,7 @@ export class ProgramsService {
         })
     }
 
-
+getMonthName(month){
+return this.monthsNames[month-1];
+}
 }

@@ -23,6 +23,10 @@
     <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer"/>
   </feature>
 
+  <feature name="CDVOrientation">
+    <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation"/>
+  </feature>
+
   <feature name="Downloader">
     <param name="android-package" value="hr.integrator.cordova.plugins.downloader.Downloader"/>
   </feature>

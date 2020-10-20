@@ -64,7 +64,7 @@ export class UsersPage implements OnInit {
     }
     onEditUser(user:any) {
         this.modalCtrl.create(
-            {component:EditUserComponent,componentProps:{user:user}}
+            {component:EditUserComponent,componentProps:{user:user,editable:true}}
         ).then(modalEL=>{
             modalEL.present();
             return modalEL.onDidDismiss()
@@ -89,7 +89,7 @@ export class UsersPage implements OnInit {
             (error)=>{this.usersService.showAlert(error.error.message)},
             ()=>{this.loadUsers();
                 this.toastCtrl.create(
-                    {message:'operation reussite',color:'success',duration:2000}
+                    {message:'عملية ناجحة',color:'success',duration:2000}
                 ).then(toastEl=>{toastEl.present()})}
         )
     }

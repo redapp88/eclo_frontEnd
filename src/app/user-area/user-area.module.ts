@@ -15,7 +15,8 @@ import {ComponentsModule} from '../components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    UserAreaPageRoutingModule,ComponentsModule
+    UserAreaPageRoutingModule,
+      ComponentsModule,
   ],
     entryComponents:[],
   declarations: [UserAreaPage]

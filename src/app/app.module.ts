@@ -14,6 +14,7 @@ import {AndroidPermissions} from '@ionic-native/android-permissions/ngx';
 import { Downloader } from '@ionic-native/downloader/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import {ComponentsModule} from './components.module';
+import {ScreenOrientation} from '@ionic-native/screen-orientation/ngx';
 @NgModule({
 
     declarations: [AppComponent],
@@ -28,6 +29,7 @@ import {ComponentsModule} from './components.module';
         File,
         FileOpener,
         Downloader,
+        ScreenOrientation,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ],
     bootstrap: [AppComponent]

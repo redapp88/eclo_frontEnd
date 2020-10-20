@@ -1,11 +1,11 @@
-<ion-content>
+<ion-content align="right">
 <form>
-<ion-button slot="end" (click)="onAddProgram()">
+<ion-button slot="start" (click)="onAddProgram()">
   <ion-icon name="add" slot="icon-only"></ion-icon>
 </ion-button>
 <ion-grid align="right" class="font-weight-bold">
   <ion-row>
-    <ion-col sizeLg="6" offsetLg="3" size="10" offset="1">
+    <ion-col sizeLg="8" offsetLg="2" size="12" offset="0">
       <ion-spinner *ngIf="isLoading" align="center" ></ion-spinner>
       <table class="table table-striped" *ngIf="!isLoading">
        <tr *ngFor="let program of loadedPrograms" >
@@ -24,20 +24,19 @@
            </ion-label>
          </td>
          <td>
-           <ion-select [value]="program.status" (ionChange)="onChangeStatus($event,program)">
+           <ion-select okText="إختر" cancelText="إلغاء" [value]="program.status" (ionChange)="onChangeStatus($event,program)">
              <ion-select-option value="enabled" >مفتوح</ion-select-option>
              <ion-select-option value="disabled" >مغلق</ion-select-option>
            </ion-select>
          </td>
          <td>
-           <ion-label class="bigText">
+           <ion-label class="font-weight-bold">
            {{program.hijri}}
          </ion-label>
          </td>
          <td>
-           <ion-label class="bigText">
-          {{program.year}} /  {{program.month}}
-           </ion-label>
+
+           <ion-label align="right" (click)="onShowProgram(program.month,program.year)" class="font-weight-bold">  {{getMonthName(program.month)}} {{program.year}}<span>م</span></ion-label>
          </td>
          <td>
            <ion-label *ngIf="program.status=='enabled'">

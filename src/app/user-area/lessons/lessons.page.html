@@ -1,11 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title align="center">
-      <ion-label>دروس برنامح شهر {{month}}/  {{year}}</ion-label>
+    <ion-title align="center" >
+      <ion-label class="font-weight-bold"> برنامج  {{name}}  لشهر   {{monthName(month)}}   {{year}} </ion-label>
+      <span>م</span>
     </ion-title>
-    <ion-back-button slot="start" defaultHref="userArea"></ion-back-button>
+    <ion-back-button size="large" slot="start" defaultHref="userArea"></ion-back-button>
     <ion-button slot="end" (click)="onAddLesson()">
-      <ion-icon name="add" slot="icon-only"></ion-icon>
+      <ion-icon name="add" size="large" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>

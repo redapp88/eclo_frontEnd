@@ -39,7 +39,7 @@
         <ion-col>
           <ion-item>
             <ion-label class="font-weight-bold" align="right" position="floating">الجنس </ion-label>
-            <ion-select align="right" formControlName="sex" >
+            <ion-select okText="إختر" cancelText="إلغاء" align="right" formControlName="sex" >
               <ion-select-option  value="m">ذكر</ion-select-option>
               <ion-select-option  value="f">انثى</ion-select-option>
             </ion-select>
@@ -58,7 +58,7 @@
         <ion-col>
           <ion-item>
             <ion-label class="font-weight-bold" align="right" position="floating">النوع</ion-label>
-            <ion-select  align="right" formControlName="categorie">
+            <ion-select okText="إختر" cancelText="إلغاء"  align="right" formControlName="categorie">
               <ion-select-option  *ngFor="let categorie of usersCategories" [value]="categorie.id">{{categorie.name}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -66,7 +66,7 @@
         <ion-col>
           <ion-item>
             <ion-label align="right" class="font-weight-bold" position="floating">المنطقة</ion-label>
-            <ion-select align="right" formControlName="area" >
+            <ion-select okText="إختر" cancelText="إلغاء" align="right" formControlName="area" >
               <ion-select-option  *ngFor="let area of usersAreas" [value]="area.id">{{area.name}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -74,8 +74,8 @@
       </ion-row>
 
       <ion-row>
-        <ion-col>
-          <ion-button (click)="onAddUser()" [disabled]="!form.valid">
+        <ion-col size="4" offset="4">
+          <ion-button expand="block" (click)="onAddUser()" [disabled]="!form.valid">
             تسجيل <ion-icon name="checkmark" slot="icon-only"></ion-icon>
           </ion-button>
         </ion-col>

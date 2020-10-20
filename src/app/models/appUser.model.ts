@@ -1,6 +1,11 @@
 export class AppUser{
     constructor(public username:string,
                 public name:string,
+                public categorie:string,
+                public sex:string,
+                public area:string,
+                public phone:string,
+                public status:string,
                 public roles:{authority:string}[],
                 public expirationDate:Date,
                 public jwt:string){}

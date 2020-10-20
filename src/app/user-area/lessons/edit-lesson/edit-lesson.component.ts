@@ -31,8 +31,12 @@ export class EditLessonComponent implements OnInit {
     ngOnInit() {
         this.lessonsTypes=this.lessonsService.lessonsTypes;
         this.lessonsTimes=this.lessonsService.lessonsTimes;
-        this.minDate=this.lesson.program.year+"-"+this.lesson.program.month;
-        this.maxDate=this.lesson.program.year+"-"+this.lesson.program.month;
+
+        let checkMonth=this.lesson.program.month+"";
+        if((this.lesson.program.month+"").length < 2)
+            checkMonth='0'+this.lesson.program.month;
+        this.minDate=this.lesson.program.year+"-"+checkMonth;
+        this.maxDate=this.lesson.program.year+"-"+checkMonth;
         this.defaultDate=this.maxDate+"-01";
         this.form=new FormGroup({
             type:new FormControl(this.lesson.type,{

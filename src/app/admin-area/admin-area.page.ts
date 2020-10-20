@@ -5,6 +5,7 @@ import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
 import {ProgramsService} from '../services/programs.service';
 import {Program} from '../models/Program.model';
+import {EditPasswordComponent} from '../shared/edit-password/edit-password.component';
 
 @Component({
   selector: 'app-admin-area',
@@ -39,11 +40,23 @@ export class AdminAreaPage implements OnInit {
 
     onLogout(){
         this.alertCtrl.create
-        ({header:"confirmation",
-            message:"voulez vous vous déconnecter?",
+        ({header:"تأكيد",
+            message:"هل تأكد طلب الخروج؟",
             buttons:[
-                {text:"oui",handler:()=>{this.authService.logout()}},
-                {text:"non",role:"cancel"}]})
+                {text:"نعم",handler:()=>{this.authService.logout()}},
+                {text:"لا",role:"cancel"}]})
             .then((alertEl)=>{alertEl.present()})
+    }
+    onEditPassword() {
+        this.modalCtrl.create(
+            {component:EditPasswordComponent,componentProps:{username:this.authService.curentUser.username}}
+        ).then(modalEL=>{
+            modalEL.present();
+            return modalEL.onDidDismiss()
+        }).then(resData=>{
+            if(resData.role==='success'){
+                this.authService.logout();
+            }
+        })
     }
 }

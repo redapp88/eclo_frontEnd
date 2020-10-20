@@ -163,4 +163,8 @@ export class ProgramViewPage implements OnInit {
             popEl.present();
         })
     }
+
+    getmonthName(month) {
+        return this.programsService.getMonthName(month);
+    }
 }
